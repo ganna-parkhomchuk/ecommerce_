@@ -1,0 +1,35 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <img class="thumbnail product-image" src="{{ product.imageURL }}">
+        <div class="box-element product">
+            <h6><strong>{{ product.name }}</strong></h6>
+            <p>{{ product.description }}</p>
+    <!--            <p>{{cartItems}}</p>-->
+            <hr>
+            <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+            <a href="{% url 'store' %}" class="btn btn-outline-secondary">Back to Store</a>
+            <h4 style="display: inline-block; float: right"><strong>{{ product.price|floatformat:2|intcomma }} UAH</strong></h4>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // Активация кнопки "Add to Cart"
+    var addToCartBtn = document.querySelector('.update-cart');
+    if (addToCartBtn) {
+        addToCartBtn.addEventListener('click', function() {
+            var productId = this.dataset.product;
+            var action = this.dataset.action;
+            console.log('Product ID:', productId);
+
+            // Вызов функции для обновления корзины
+            updateCart(productId, action);
+        });
+    }
+</script>
+
+{% endblock content %}
